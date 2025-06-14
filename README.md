@@ -6,10 +6,10 @@
 
 ## 🚀 Features
 
-- 💬 Chat with real customer reviews
-- ⚡ Fast, relevant, and to-the-point responses
-- 🧠 Uses local vector search (ChromaDB) for context
-- 🌐 Simple Streamlit web UI
+- 💬 Chat with real customer reviews  
+- ⚡ Fast, relevant, and to-the-point responses  
+- 🧠 Uses local vector search (ChromaDB) for context  
+- 🌐 Simple Streamlit web UI  
 
 ---
 
@@ -20,7 +20,7 @@
 - **LangChain** for prompt orchestration
 - **Ollama (LLaMA3.2)** as the LLM
 - **ChromaDB** for vector database
-- **Ollama Embeddings** for review embedding
+- **OllamaEmbeddings** for review embedding
 
 ---
 
@@ -30,11 +30,15 @@
 
 pizzence/
 │
-├── main.py                        # Streamlit chatbot app
-├── vector.py                      # Review embedding and retriever setup
+├── chrome\_langchain\_db/              # ChromaDB vector store (auto-created)
+├── .gitignore                        # Git ignore rules
+├── .python-version                   # Python version file (optional)
+├── main.py                           # Streamlit chatbot app
+├── vector.py                         # Review embedding and retriever setup
 ├── realistic\_restaurant\_reviews.csv  # Customer reviews dataset
-├── requirements.txt               # Dependencies
-└── README.md                      # You’re here!
+├── pyproject.toml                    # Project dependencies and config
+├── uv.lock                           # Package lock file (if using uv/rye)
+└── README.md                         # You’re here!
 
 ````
 
@@ -59,11 +63,19 @@ source venv/bin/activate  # macOS/Linux
 
 ### 3. Install dependencies
 
+If you're using `uv`:
+
+```bash
+uv pip install -r requirements.txt
+```
+
+Otherwise:
+
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Run the chatbot
+### 4. Start the chatbot
 
 ```bash
 streamlit run main.py
@@ -71,38 +83,25 @@ streamlit run main.py
 
 ---
 
-## 📄 Dataset Format
-
-Make sure the file `realistic_restaurant_reviews.csv` exists with the following columns:
-
-* `Title` – Short title of the review
-* `Review` – Full review text
-* `Rating` – Numeric rating (e.g., 4.5)
-* `Date` – Review date
-
----
-
 ## 🧠 How It Works
 
-1. Reviews are embedded using `OllamaEmbeddings`.
-2. Stored locally using `ChromaDB`.
-3. When a question is asked, Pizzence retrieves relevant reviews.
-4. Feeds them into a custom prompt for LLaMA3 to generate a helpful reply.
+1. Loads and embeds the reviews using **OllamaEmbeddings**.
+2. Saves them to a local **ChromaDB** vector store.
+3. When a user asks a question, relevant reviews are retrieved.
+4. These are used as context for the **LLaMA3** model to generate an answer.
 
 ---
 
 ## ✨ Example Questions
 
 * *Do they offer gluten-free pizzas?*
-* *How's the customer service?*
-* *What are customers saying about the crust?*
+* *How is the staff behavior according to reviews?*
+* *What’s the most appreciated item on the menu?*
 
 ---
 
 ## 📬 Feedback
 
-Feel free to [open an issue](https://github.com/ChAbdulWahhab/pizzence/issues) or contribute improvements!
-
----
+Open an issue or contribute on [GitHub](https://github.com/ChAbdulWahhab/pizzence).
 
 Enjoy chatting with your reviews – powered by **Pizzence** 🍕
